@@ -28,8 +28,7 @@ podTemplate(yaml: '''
                     curl -i $CALCIP:8080/sum?a=3\\&b=2
                     curl -i $CALCIP:8080/div?a=21\\&b=3
                     '''
-                }
-                
+                }                
             }
             /*
             container('gradle') {
