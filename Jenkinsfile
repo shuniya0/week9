@@ -20,6 +20,7 @@ podTemplate(yaml: '''
             container('centos') {
                 stage('start calculator') {
                     sh '''
+                    curl -k -v -XPATCH -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  -H "Accept: application/json" -H "Content-Type: application/strategic-merge-patch+json" -H "User-Agent: kubectl/v1.21.5 (darwin/amd64) kubernetes/aea7bba" 'https://kubernetes.docker.internal:6443/apis/apps/v1/namespaces/staging/deployments/calculator-deployment?fieldManager=kubectl-client-side-apply' --data '{"spec":{"template":{"spec":{"containers":[{"name":"calculator","image":"leszko/calculator"}]}}}}'
                     curl -k -v -XPATCH -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"  -H "Accept: application/json" -H "Content-Type: application/strategic-merge-patch+json" -H "User-Agent: kubectl/v1.21.5 (darwin/amd64) kubernetes/aea7bba" 'https://kubernetes.docker.internal:6443/apis/apps/v1/namespaces/staging/deployments/calculator-deployment?fieldManager=kubectl-client-side-apply' --data '{"spec":{"replicas":2}}'
                     '''
                 }
